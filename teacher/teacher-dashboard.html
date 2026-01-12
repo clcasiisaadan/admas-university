@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Portal | ADMAS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --primary: #05264a; --accent: #f5b400; --bg: #f4f7fa; --success: #28a745; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; }
+        
+        /* Sidebar */
+        .sidebar { width: 260px; background: var(--primary); height: 100vh; position: fixed; color: white; padding: 20px; }
+        .nav-item { padding: 15px; border-radius: 12px; cursor: pointer; color: #b2bec3; display: flex; align-items: center; gap: 10px; margin-bottom: 5px; transition: 0.3s; }
+        .nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.1); color: white; border-left: 4px solid var(--accent); }
+        
+        /* Main Content */
+        .main-content { margin-left: 260px; padding: 40px; width: 100%; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        
+        /* Form Elements */
+        .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--primary); }
+        input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .btn-send { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
+        .btn-send:hover { background: #083a6e; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; }
+        .status-present { color: var(--success); font-weight: bold; }
+        .status-absent { color: #dc3545; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2 style="color: var(--accent);">ADMAS</h2>
+        <p style="font-size: 12px; color: #888;">INSTRUCTOR PANEL</p>
+        <hr style="border: 0.5px solid #333; margin: 20px 0;">
+        <div class="nav-item active" onclick="switchTab('grades')"><i class="fas fa-edit"></i> Post Grades</div>
+        <div class="nav-item" onclick="switchTab('attendance')"><i class="fas fa-user-check"></i> Mark Attendance</div>
+        <div class="nav-item" onclick="location.href='../login/index.html'"><i class="fas fa-sign-out-alt"></i> Logout</div>
+    </div>
+
+    <div class="main-content">
+        <header style="margin-bottom: 30px;">
+            <h1>Ku soo dhowaw, Macallin</h1>
+            <p>Maamul darajooyinka iyo xaadirinta ardaydaada.</p>
+        </header>
+
+        <section id="grades-section" class="tab-content">
+            <div class="card">
+                <h3><i class="fas fa-graduation-cap"></i> Geli Darajooyinka (Post Grades)</h3>
+                <div class="grid-inputs">
+                    <div>
+                        <label>Student ID</label>
+                        <input type="text" id="gradeStudentId" placeholder="Tusaale: 14551">
+                    </div>
+                    <div>
+                        <label>Subject</label>
+                        <select id="gradeSubject">
+                            </select>
+                    </div>
+                </div>
+                <div class="grid-inputs">
+                    <div><label>Mid Exam (30%)</label><input type="number" id="midGrade" max="30"></div>
+                    <div><label>Final Exam (70%)</label><input type="number" id="finalGrade" max="70"></div>
+                </div>
+                <button class="btn-send" onclick="saveGrade()">SAVE & SEND TO STUDENT</button>
+            </div>
+        </section>
+
+        <section id="attendance-section" class="tab-content" style="display:none;">
+            <div class="card">
+                <h3><i class="fas fa-calendar-alt"></i> Xaadirinta (Attendance)</h3>
+                <div class="grid-inputs">
+                    <div><label>Student ID</label><input type="text" id="attStudentId"></div>
+                    <div><label>Status</label>
+                        <select id="attStatus">
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn-send" style="background: var(--success);" onclick="saveAttendance()">SUBMIT ATTENDANCE</button>
+            </div>
+        </section>
+    </div>
+
+<script>
+    // 1. Load Courses from Admin
+    window.onload = function() {
+        const courses = JSON.parse(localStorage.getItem("globalCourses")) || [];
+        const subjectSelect = document.getElementById("gradeSubject");
+        
+        if(courses.length === 0) {
+            subjectSelect.innerHTML = "<option>Ma jiro koorso...</option>";
+        } else {
+            courses.forEach(c => {
+                subjectSelect.innerHTML += `<option value="${c.name}">${c.name}</option>`;
+            });
+        }
+    };
+
+    // 2. Save Grade Logic
+    function saveGrade() {
+        const sId = document.getElementById("gradeStudentId").value.trim();
+        const subject = document.getElementById("gradeSubject").value;
+        const mid = document.getElementById("midGrade").value;
+        const final = document.getElementById("finalGrade").value;
+
+        if(!sId || !mid || !final) return alert("Fadlan buuxi dhamaan meelaha banaan!");
+
+        // Soo qaado diiwaanka guud ee ardayda (Grades/Attendance)
+        let records = JSON.parse(localStorage.getItem("studentRecords")) || {};
+
+        // Haddii ardaygu uusan lahayn diiwon hore, u samee mid cusub
+        if(!records[sId]) {
+            records[sId] = { grades: [], attendanceDetails: [] };
+        }
+
+        // Ku dar darajada cusub
+        records[sId].grades.push({
+            subject: subject,
+            mid: mid,
+            final: final,
+            crh: 3 // Credit hours (default)
+        });
+
+        localStorage.setItem("studentRecords", JSON.stringify(records));
+        alert("Darajada si guuleysato ayaa loo diray Ardayga " + sId);
+        
+        // Clear fields
+        document.getElementById("gradeStudentId").value = "";
+        document.getElementById("midGrade").value = "";
+        document.getElementById("finalGrade").value = "";
+    }
+
+    // 3. Save Attendance Logic
+    function saveAttendance() {
+        const sId = document.getElementById("attStudentId").value.trim();
+        const status = document.getElementById("attStatus").value;
+        const subject = document.getElementById("gradeSubject").value; // Maadada hadda la doortay
+        const today = new Date().toLocaleDateString();
+
+        if(!sId) return alert("Geli Student ID!");
+
+        let records = JSON.parse(localStorage.getItem("studentRecords")) || {};
+
+        if(!records[sId]) {
+            records[sId] = { grades: [], attendanceDetails: [] };
+        }
+
+        records[sId].attendanceDetails.push({
+            date: today,
+            subject: subject,
+            status: status
+        });
+
+        localStorage.setItem("studentRecords", JSON.stringify(records));
+        alert(`Attendance-ka ${status} waa loo kaydiyey ardayga ${sId}`);
+        document.getElementById("attStudentId").value = "";
+    }
+
+    function switchTab(tab) {
+        document.getElementById('grades-section').style.display = (tab === 'grades') ? 'block' : 'none';
+        document.getElementById('attendance-section').style.display = (tab === 'attendance') ? 'block' : 'none';
+        
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Results | Student Portal</title>
+    <link rel="stylesheet" href="gpa.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="gpa-container">
+        <header class="page-header">
+            <h2><i class="fas fa-graduation-cap"></i> Academic Performance</h2>
+            <p>Natiijada imtixaannada iyo GPA-ga rasmiga ah.</p>
+        </header>
+
+        <div class="gpa-scoreboard">
+            <div class="gpa-card">
+                <span class="label">Cumulative GPA</span>
+                <h1 id="gpaScore">0.00</h1>
+                <div class="gpa-status" id="gpaStatus">...</div>
+            </div>
+            <div class="gpa-details">
+                <div class="detail-item">
+                    <span>Total Credits:</span>
+                    <strong id="totalCrh">0</strong>
+                </div>
+                <div class="detail-item">
+                    <span>Total Points:</span>
+                    <strong id="totalPoints">0</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="results-card">
+            <h3>Semester Results</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Mid (30)</th>
+                        <th>Final (70)</th>
+                        <th>Total</th>
+                        <th>Grade</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody id="gradeRows">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="gpa.js"></script>
+</body>
+</html>

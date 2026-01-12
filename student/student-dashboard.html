@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal | ADMAS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="Student.css">
+    <link href="Student.css">
+</head>
+<body>
+<label for="nav-toggle" class="nav-toggle-label">
+    <aside class="sidebar">
+        <div class="sidebar-brand"><i class="fas fa-university"></i> ADMAS</div>
+        <div class="nav-item active" onclick="showSection('overview', this)"><i class="fas fa-th-large"></i> Dashboard</div>
+        <div class="nav-item" onclick="showSection('courses', this)"><i class="fas fa-book-open"></i> My Courses</div>
+        <div class="nav-item" onclick="showSection('exams', this)"><i class="fas fa-file-signature"></i> Exam Schedule</div>
+        <div class="nav-item" onclick="showSection('attendance', this)"><i class="fas fa-calendar-check"></i> Attendance</div>
+        <div class="nav-item" onclick="showSection('grades', this)"><i class="fas fa-file-invoice"></i> Grades</div>
+        <div class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div>
+    </aside>
+
+    <main class="main-content">
+        <header>
+            <h1 id="welcomeText">Soo dhowaw...</h1>
+            <p id="studentIDDisplay">Student ID: ...</p>
+        </header>
+
+        <section id="overview" class="content-section active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="icon-box blue"><i class="fas fa-star"></i></div>
+                    <div class="stat-info"><h3 id="gpaSummary">0.00</h3><p>Total GPA</p></div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon-box green"><i class="fas fa-user-check"></i></div>
+                    <div class="stat-info"><h3 id="attSummary">0%</h3><p>Attendance</p></div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon-box gold"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="stat-info"><h3 id="courseCountDisplay">0</h3><p>My Courses</p></div>
+                </div>
+            </div>
+
+            <div class="card-container">
+                <h2><i class="fas fa-info-circle"></i> Personal Profile</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div><span style="color:var(--text-muted)">Faculty:</span> <p id="displayFaculty" style="font-weight:600">---</p></div>
+                    <div><span style="color:var(--text-muted)">Academic Status:</span> <p style="color:green; font-weight:600">Active Student</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="courses" class="content-section">
+            <div class="card-container">
+                <h2><i class="fas fa-book"></i> My Registered Courses</h2>
+                <table>
+                    <thead><tr><th>Course Name</th><th>Instructor</th><th>Credit Hours</th></tr></thead>
+                    <tbody id="coursesTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="exams" class="content-section">
+            <div class="card-container">
+                <h2><i class="fas fa-clock"></i> Upcoming Exams</h2>
+                <table>
+                    <thead><tr><th>Course</th><th>Type</th><th>Date</th><th>Time</th></tr></thead>
+                    <tbody id="examsTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="attendance" class="content-section">
+            <div class="card-container">
+                <h2><i class="fas fa-calendar-check"></i> Attendance Record</h2>
+                <table>
+                    <thead><tr><th>Date</th><th>Subject</th><th>Status</th></tr></thead>
+                    <tbody id="attendanceTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="grades" class="content-section">
+            <div class="card-container">
+                <h2><i class="fas fa-file-invoice"></i> Official Grades</h2>
+                <table>
+                    <thead><tr><th>Subject</th><th>Score</th><th>Result</th></tr></thead>
+                    <tbody id="gradesTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+<script src="student.js">
+  
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+:root {
+    --primary: #062b4f;
+    --accent: #f5b400;
+    --success: #27ae60;
+    --bg: #f4f7f6;
+    --white: #ffffff;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg);
+    margin: 0;
+    padding: 30px;
+}
+
+.gpa-container { max-width: 1000px; margin: auto; animation: fadeIn 0.8s ease; }
+
+/* Scoreboard Design */
+.gpa-scoreboard {
+    background: var(--primary);
+    color: white;
+    padding: 40px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    box-shadow: 0 15px 35px rgba(6, 43, 79, 0.2);
+}
+
+.gpa-card h1 { font-size: 4rem; margin: 10px 0; color: var(--accent); }
+.gpa-status { background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; }
+
+.gpa-details { text-align: right; }
+.detail-item { margin-bottom: 10px; font-size: 1.1rem; }
+.detail-item strong { color: var(--accent); font-size: 1.3rem; margin-left: 10px; }
+
+/* Table Design */
+.results-card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; padding: 15px; border-bottom: 2px solid #f1f1f1; color: #7f8c8d; }
+td { padding: 18px 15px; border-bottom: 1px solid #f9f9f9; font-weight: 500; }
+
+.grade-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+.grade-A { color: var(--success); background: #eafaf1; }
+.grade-F { color: #e74c3c; background: #fdedec; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; } }

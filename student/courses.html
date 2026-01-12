@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses | Student Portal</title>
+    <link rel="stylesheet" href="courses.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="courses-container">
+        <header class="page-header">
+            <div class="title-area">
+                <h2><i class="fas fa-book-open"></i> My Enrolled Courses</h2>
+                <p>Maaddooyinka aad u diiwaangashan tahay simistarka hadda.</p>
+            </div>
+            <div class="course-count-badge">
+                Total: <span id="totalCourseNum">0</span> Courses
+            </div>
+        </header>
+
+        <div class="course-grid" id="courseGrid">
+            </div>
+
+        <div id="noCourses" class="empty-state" style="display: none;">
+            <i class="fas fa-folder-open"></i>
+            <p>Weli ma jirto maaddo laguu soo xareeyay.</p>
+        </div>
+    </div>
+
+    <script src="courses.js"></script>
+</body>
+</html>

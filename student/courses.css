@@ -1,0 +1,110 @@
+:root {
+    --primary: #062b4f;
+    --accent: #f5b400;
+    --bg-light: #f1f5f9;
+    --white: #ffffff;
+    --text-dark: #1e293b;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-light);
+    margin: 0;
+    padding: 30px;
+}
+
+.courses-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.course-count-badge {
+    background: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+/* Course Grid */
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+/* Course Card Style */
+.course-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    border-left: 6px solid var(--accent);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: slideUp 0.5s ease forwards;
+    opacity: 0;
+}
+
+.course-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.course-card h3 {
+    margin: 0 0 15px 0;
+    color: var(--primary);
+    font-size: 1.4rem;
+}
+
+.course-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #64748b;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.meta-item i {
+    color: var(--accent);
+    width: 20px;
+}
+
+.card-footer {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+}
+
+.status-active {
+    color: #10b981;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 100px;
+    color: #94a3b8;
+}
+
+.empty-state i { font-size: 4rem; margin-bottom: 20px; }
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}

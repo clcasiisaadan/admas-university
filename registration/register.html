@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Registration - Admas University</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .registration-card {
+            background: white;
+            width: 700px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #002147; /* Blue-ka madow ee sawirka */
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .header h2 {
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 22px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #003366;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .input-group input, .input-group select {
+            padding: 10px;
+            border: 1px solid #eee;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        /* Midabka cas ee waalidiinta (sida sawirka) */
+        .red-label label {
+            color: #ff0000 !important;
+        }
+
+        .full-width {
+            grid-column: span 2;
+            margin-top: 10px;
+        }
+
+        .submit-btn {
+            background-color: #002147;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #003366;
+        }
+
+        .file-input {
+            padding: 5px !important;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="registration-card">
+    <div class="header">
+        <h2>Admission Registration</h2>
+    </div>
+
+    <form id="admissionForm" class="form-grid">
+        <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" id="fullName" required>
+        </div>
+        <div class="input-group">
+            <label>Student Email</label>
+            <input type="email" id="studentEmail" required>
+        </div>
+
+        <div class="input-group">
+            <label>Phone Number</label>
+            <input type="text" id="phoneNumber" required>
+        </div>
+        <div class="input-group">
+            <label>Department</label>
+            <select id="department">
+                <option value="Computer Science">Computer Science</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Business Administration">Business Administration</option>
+                <option value="Accounting">Accounting</option>
+            </select>
+        </div>
+
+        <div class="input-group red-label">
+            <label>Parent Name</label>
+            <input type="text" id="parentName" required>
+        </div>
+        <div class="input-group red-label">
+            <label>Parent Phone</label>
+            <input type="text" id="parentPhone" required>
+        </div>
+
+        <div class="input-group">
+            <label>Profile Image</label>
+            <input type="file" id="profileImg" class="file-input">
+        </div>
+        <div class="input-group">
+            <label>Transcript (PDF)</label>
+            <input type="file" id="transcript" class="file-input">
+        </div>
+
+        <div class="full-width">
+            <button type="submit" class="submit-btn">Submit Application</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // JavaScript si xogta loo keydiyo
+    document.getElementById('admissionForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Diyaarinta xogta
+        const studentData = {
+            fullName: document.getElementById('fullName').value,
+            email: document.getElementById('studentEmail').value,
+            phone: document.getElementById('phoneNumber').value,
+            department: document.getElementById('department').value,
+            parentName: document.getElementById('parentName').value,
+            parentPhone: document.getElementById('parentPhone').value,
+            date: new Date().toLocaleString()
+        };
+
+        // Keydinta LocalStorage
+        let registrations = JSON.parse(localStorage.getItem('admissions')) || [];
+        registrations.push(studentData);
+        localStorage.setItem('admissions', JSON.stringify(registrations));
+
+        alert("Codsigaaga si guul leh ayaa loo diray!");
+        this.reset();
+    });
+
+    // Admin View: Ku qor 'showAdmissions()' Console-ka
+    function showAdmissions() {
+        const data = JSON.parse(localStorage.getItem('admissions'));
+        if (data && data.length > 0) {
+            console.log("--- LIISKA ARDAYDA IS-DIIWAANGELISAY ---");
+            console.table(data);
+        } else {
+            console.log("Ma jiraan arday weli is-diiwaangelisay.");
+        }
+    }
+</script>
+
+</body>
+</html>
