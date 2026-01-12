@@ -1,21 +1,14 @@
-        :root { --primary: #00acee; --dark: #05264a; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .login-card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 420px; text-align: center; }
-        .role-selection { display: flex; justify-content: space-around; margin: 20px 0; border-bottom: 1px solid #eee; padding-bottom: 15px; }
-        .role-item { cursor: pointer; color: #888; font-size: 12px; transition: 0.3s; }
-        .role-item.active { color: var(--primary); font-weight: bold; }
-        .icon-circle { width: 45px; height: 45px; border-radius: 50%; background: #f1f1f1; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px; font-size: 20px; }
-        .role-item.active .icon-circle { background: var(--primary); color: white; }
-        input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; outline: none; }
-        input:focus { border-color: var(--primary); }
-        .btn { width: 100%; padding: 14px; background: var(--primary); border: none; border-radius: 30px; color: white; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 16px; }
-        .btn:hover { background: #008fca; }
-        .register-footer { margin-top: 20px; font-size: 14px; color: #666; }
-        .register-footer a { color: var(--primary); font-weight: bold; cursor: pointer; text-decoration: none; }
-        
-        /* Modal for Admission */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
-        .modal-content { background: white; padding: 30px; border-radius: 20px; width: 95%; max-width: 550px; position: relative; }
-        .section-title { background: var(--dark); color: white; padding: 8px 15px; border-radius: 8px; margin: 15px 0 10px; font-size: 14px; text-align: left; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .close-btn { position: absolute; right: 20px; top: 20px; font-size: 24px; cursor: pointer; color: #888; }
+ :root { --primary: #0084b4; --secondary: #00acee; --dark: #0a2540; --bg: #f4f7fa; }
+        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .login-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); width: 100%; max-width: 420px; text-align: center; }
+        .role-selection { display: flex; background: #f0f2f5; padding: 5px; border-radius: 12px; margin-bottom: 25px; }
+        .role-item { flex: 1; padding: 10px; cursor: pointer; border-radius: 10px; font-size: 13px; font-weight: 600; color: #666; transition: 0.3s; }
+        .role-item.active { background: white; color: var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .input-group { text-align: left; margin-bottom: 15px; position: relative; }
+        .input-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+        .input-group input { width: 100%; padding: 12px 12px 12px 40px; border: 2px solid #eee; border-radius: 10px; box-sizing: border-box; outline: none; }
+        .input-group i { position: absolute; left: 15px; top: 35px; color: #aaa; }
+        .login-btn { width: 100%; padding: 14px; background: var(--primary); border: none; border-radius: 12px; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .login-btn:hover { background: var(--secondary); transform: translateY(-2px); }
+        .footer-link { margin-top: 20px; font-size: 14px; color: #666; }
+        .footer-link a { color: var(--primary); text-decoration: none; font-weight: bold; }

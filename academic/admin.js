@@ -1,10 +1,6 @@
 // --- AUTH & LOGOUT ---
-    function logout() {
-        // Waxaan ka saaraynaa xogta qofka hadda gudaha ugu jira (currentUser)
+    function logoutAdmin() {
         localStorage.removeItem("currentUser");
-        
-        // Waxaan u diraynaa bogga login-ka
-        // Hubi in dariiqan (path) uu sax yahay: ../login/index.html
         window.location.href = "../login/index.html";
     }
 
@@ -38,39 +34,58 @@
 
     // --- STUDENT MANAGEMENT ---
     function renderStudents() {
+        // Halkan waxaan ka soo akhrineynaa xogta hadda jirta
         const s = JSON.parse(localStorage.getItem("students")) || [];
         displayStudentList(s);
     }
 
     function displayStudentList(list) {
-        document.getElementById('studentTable').innerHTML = list.map(x => `
-            <tr>
-                <td>${x.name}</td>
-                <td>${x.id}</td>
-                <td>${x.faculty}</td>
-                <td>
-                    <button class="btn-edit" onclick="editStudent('${x.id}')">Edit</button>
-                    <button class="btn-delete" onclick="deleteItem('students','id','${x.id}')">X</button>
-                </td>
-            </tr>`).join('');
+        const table = document.getElementById('studentTable');
+        table.innerHTML = ""; // Nadiifi table-ka horta
+
+        list.forEach(x => {
+            const row = `
+                <tr>
+                    <td>${x.name}</td>
+                    <td>${x.id}</td>
+                    <td>${x.faculty}</td>
+                    <td>
+                        <button class="btn-edit" onclick="editStudent('${x.id}')">Edit</button>
+                        <button class="btn-delete" onclick="deleteItem('students','id','${x.id}')">X</button>
+                    </td>
+                </tr>`;
+            table.innerHTML += row;
+        });
     }
 
+    // --- SEARCH FUNCTION (Halkan ayaa la saxay) ---
     function searchStudents() {
         const query = document.getElementById('studentSearch').value.toLowerCase();
-        const s = JSON.parse(localStorage.getItem("students")) || [];
-        displayStudentList(s.filter(x => x.name.toLowerCase().includes(query) || x.id.toString().includes(query)));
+        const allStudents = JSON.parse(localStorage.getItem("students")) || [];
+        
+        // Shaandhee liiska iyadoo la eegayo magaca ama ID-ga
+        const filtered = allStudents.filter(s => {
+            return s.name.toLowerCase().includes(query) || 
+                   s.id.toString().toLowerCase().includes(query);
+        });
+
+        // Dib u tusi liiska la shaandheeyay
+        displayStudentList(filtered);
     }
 
     function saveStudent() {
         const id = document.getElementById('regID').value;
         const eid = document.getElementById('editStudentId').value;
         let s = JSON.parse(localStorage.getItem("students")) || [];
+        
         const data = { 
             id, 
             name: document.getElementById('regName').value, 
             email: document.getElementById('regEmail').value, 
             faculty: document.getElementById('regFaculty').value 
         };
+
+        if(!data.name || !data.id) return alert("Please fill Name and ID");
         
         if(eid) { 
             const idx = s.findIndex(x => x.id == eid);
@@ -82,6 +97,20 @@
         localStorage.setItem("students", JSON.stringify(s));
         resetForms(); 
         renderStudents();
+    }
+
+    function editStudent(id) {
+        const s = JSON.parse(localStorage.getItem("students")) || [];
+        const student = s.find(x => x.id == id);
+        if(student) {
+            document.getElementById('regName').value = student.name;
+            document.getElementById('regID').value = student.id;
+            document.getElementById('regEmail').value = student.email || "";
+            document.getElementById('regFaculty').value = student.faculty;
+            document.getElementById('editStudentId').value = student.id;
+            document.getElementById('studentSaveBtn').innerText = "Update Student";
+            window.scrollTo(0,0);
+        }
     }
 
     // --- GRADES ---
@@ -144,9 +173,9 @@
         const c = JSON.parse(localStorage.getItem("globalCourses")) || [];
         const t = JSON.parse(localStorage.getItem("teachers")) || [];
         
-        const sOpts = s.map(x => `<option value="${x.name} (${x.id})">${x.name} (${x.id})</option>`).join('');
-        const cOpts = c.map(x => `<option value="${x.name}">${x.name}</option>`).join('');
-        const tOpts = t.map(x => `<option value="${x.name}">${x.name}</option>`).join('');
+        const sOpts = s.length ? s.map(x => `<option value="${x.name} (${x.id})">${x.name} (${x.id})</option>`).join('') : "<option>No Students</option>";
+        const cOpts = c.length ? c.map(x => `<option value="${x.name}">${x.name}</option>`).join('') : "<option>No Courses</option>";
+        const tOpts = t.length ? t.map(x => `<option value="${x.name}">${x.name}</option>`).join('') : "<option>No Teachers</option>";
 
         document.getElementById('gradeStudent').innerHTML = sOpts;
         document.getElementById('attStudent').innerHTML = sOpts;
@@ -224,6 +253,7 @@
     function resetForms() { 
         document.querySelectorAll('input').forEach(i => i.value = ""); 
         if(document.getElementById('studentSaveBtn')) document.getElementById('studentSaveBtn').innerText = "Save Student"; 
+        document.getElementById('editStudentId').value = "";
     }
     
     function closeModal() { 
