@@ -1,59 +1,81 @@
-// ================= LOAD STUDENT =================
-const student = JSON.parse(localStorage.getItem("studentApplication"));
-const info = document.getElementById("studentInfo");
-
-if (student) {
-    info.innerHTML = `
-        <b>Name:</b> ${student.fullName}<br>
-        <b>Department:</b> ${student.department}
-    `;
-} else {
-    info.textContent = "No student registered yet.";
-}
-
-// ================= SAVE ATTENDANCE =================
-function saveAttendance() {
-    const attendance = {
-        date: attDate.value,
-        subject: attSubject.value,
-        status: attStatus.value
+ // 1. Load Courses from Admin
+    window.onload = function() {
+        const courses = JSON.parse(localStorage.getItem("globalCourses")) || [];
+        const subjectSelect = document.getElementById("gradeSubject");
+        
+        if(courses.length === 0) {
+            subjectSelect.innerHTML = "<option>Ma jiro koorso...</option>";
+        } else {
+            courses.forEach(c => {
+                subjectSelect.innerHTML += `<option value="${c.name}">${c.name}</option>`;
+            });
+        }
     };
 
-    if (!attendance.date || !attendance.subject) {
-        alert("Please fill date and subject");
-        return;
+    // 2. Save Grade Logic
+    function saveGrade() {
+        const sId = document.getElementById("gradeStudentId").value.trim();
+        const subject = document.getElementById("gradeSubject").value;
+        const mid = document.getElementById("midGrade").value;
+        const final = document.getElementById("finalGrade").value;
+
+        if(!sId || !mid || !final) return alert("Fadlan buuxi dhamaan meelaha banaan!");
+
+        // Soo qaado diiwaanka guud ee ardayda (Grades/Attendance)
+        let records = JSON.parse(localStorage.getItem("studentRecords")) || {};
+
+        // Haddii ardaygu uusan lahayn diiwon hore, u samee mid cusub
+        if(!records[sId]) {
+            records[sId] = { grades: [], attendanceDetails: [] };
+        }
+
+        // Ku dar darajada cusub
+        records[sId].grades.push({
+            subject: subject,
+            mid: mid,
+            final: final,
+            crh: 3 // Credit hours (default)
+        });
+
+        localStorage.setItem("studentRecords", JSON.stringify(records));
+        alert("Darajada si guuleysato ayaa loo diray Ardayga " + sId);
+        
+        // Clear fields
+        document.getElementById("gradeStudentId").value = "";
+        document.getElementById("midGrade").value = "";
+        document.getElementById("finalGrade").value = "";
     }
 
-    let attendanceList = JSON.parse(localStorage.getItem("attendanceList")) || [];
-    attendanceList.push(attendance);
+    // 3. Save Attendance Logic
+    function saveAttendance() {
+        const sId = document.getElementById("attStudentId").value.trim();
+        const status = document.getElementById("attStatus").value;
+        const subject = document.getElementById("gradeSubject").value; // Maadada hadda la doortay
+        const today = new Date().toLocaleDateString();
 
-    localStorage.setItem("attendanceList", JSON.stringify(attendanceList));
-    alert("Attendance saved ✔");
+        if(!sId) return alert("Geli Student ID!");
 
-    attDate.value = "";
-    attSubject.value = "";
-}
+        let records = JSON.parse(localStorage.getItem("studentRecords")) || {};
 
-// ================= SAVE EXAM =================
-function saveExam() {
-    const exam = {
-        subject: examSubject.value,
-        examName: examName.value,
-        score: examScore.value
-    };
+        if(!records[sId]) {
+            records[sId] = { grades: [], attendanceDetails: [] };
+        }
 
-    if (!exam.subject || !exam.examName || !exam.score) {
-        alert("Please fill all exam fields");
-        return;
+        records[sId].attendanceDetails.push({
+            date: today,
+            subject: subject,
+            status: status
+        });
+
+        localStorage.setItem("studentRecords", JSON.stringify(records));
+        alert(`Attendance-ka ${status} waa loo kaydiyey ardayga ${sId}`);
+        document.getElementById("attStudentId").value = "";
     }
 
-    let exams = JSON.parse(localStorage.getItem("examResults")) || [];
-    exams.push(exam);
-
-    localStorage.setItem("examResults", JSON.stringify(exams));
-    alert("Exam score saved ✔");
-
-    examSubject.value = "";
-    examName.value = "";
-    examScore.value = "";
-}
+    function switchTab(tab) {
+        document.getElementById('grades-section').style.display = (tab === 'grades') ? 'block' : 'none';
+        document.getElementById('attendance-section').style.display = (tab === 'attendance') ? 'block' : 'none';
+        
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+    }

@@ -1,73 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="so">
 <head>
     <meta charset="UTF-8">
-    <title>Admas University</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+    <title>eLEARNING - Admas University</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        body { font-family: 'Heebo', sans-serif; overflow-x: hidden; }
+        .text-primary-color { color: #06BBCC !important; }
+
+        /* Navbar */
+        .navbar-light .navbar-nav .nav-link { padding: 25px 15px; color: #181d38; font-weight: 500; transition: .5s; }
+        .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link.active { color: #06BBCC !important; }
+
+        /* Background Slideshow */
+        .carousel-item { height: 90vh; min-height: 600px; }
+        .carousel-item img { object-fit: cover; height: 100%; width: 100%; }
+        .carousel-overlay { position: absolute; inset: 0; background: rgba(24, 29, 56, .7); display: flex; align-items: center; }
+
+        /* Join Now Button Animation */
+        .btn-join { 
+            background-color: #06BBCC; 
+            color: white; 
+            border-radius: 0; 
+            font-weight: 700;
+            border: none;
+            transition: .5s;
+        }
+        .btn-join:hover { background-color: #181d38; transform: scale(1.05); }
+        .pulse-btn { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(6, 187, 204, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(6, 187, 204, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(6, 187, 204, 0); }
+        }
+
+        /* Program Cards */
+        .program-card { padding: 60px 45px; min-height: 520px; color: white; transition: 0.5s; opacity: 0; }
+        .bg-green { background-color: #2D6A4F; } 
+        .bg-yellow { background-color: #FFD642; color: #181d38; } 
+        .bg-blue { background-color: #4A76C0; }
+        .program-list { list-style: none; padding: 0; font-weight: 700; }
+        .program-list li { margin-bottom: 12px; }
+
+        /* Service Items */
+        .service-item { background: #f0fbfc; transition: .5s; opacity: 0; border-radius: 5px; }
+        .service-item:hover { margin-top: -10px; background: #06BBCC; color: white; }
+        .service-item.active { background: #06BBCC; color: white; opacity: 1; }
+
+        /* Categories */
+        .cat-item { position: relative; display: block; overflow: hidden; opacity: 0; border-radius: 5px; }
+        .cat-item img { transition: .5s; }
+        .cat-item:hover img { transform: scale(1.1); }
+        .cat-overlay { position: absolute; bottom: 0; right: 0; background: #fff; padding: 10px 20px; margin: 15px; }
+
+        .reveal { opacity: 1 !important; }
+        .section-title { position: relative; display: inline-block; text-transform: uppercase; font-weight: 700; color: #06BBCC; }
+    </style>
 </head>
 <body>
 
-    <!-- ===== NAVBAR ===== -->
-    <header class="navbar">
-        <div class="logo">
-            <span class="logo-yellow">Admas</span>
-            <span class="logo-white">UNI</span>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#"><span style="color: #06BBCC;">e</span>LEARNING</a>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto">
+                    <a href="#" class="nav-item nav-link active">HOME</a>
+                    <a href="#" class="nav-item nav-link">ABOUT</a>
+                    <a href="#" class="nav-item nav-link">COURSES</a>
+                </div>
+                <a href="login/index.html" class="btn btn-join pulse-btn py-4 px-lg-5 d-none d-lg-block">JOIN NOW &rarr;</a>
+            </div>
         </div>
+    </nav>
 
-        <nav class="nav-links">
-            <a href="index.html">Home</a>
-
-            <!-- Apply Now → Registration -->
-            <a href="login/index.html" class="btn-apply">
-                Apply Now
-            </a>
-
-            <!-- Student Portal -->
-            <a href="student/student-login.html">
-                Student Portal
-            </a>
-
-            <!-- Academic / Admin Login -->
-            <a href="C:\Users\Administrator\Music\admas university management system\academic\admin-dashboard.html" class="btn-login">
-                Academic Login
-            </a>
-        </nav>
-    </header>
-
-    <!-- ===== HERO SECTION ===== -->
-    <section class="hero">
-        <h1>
-            ADMAS <span>UNIVERSITY</span>
-        </h1>
-
-        <p>
-            Nidaamka Maamulka Waxbarashada ee Admas University
-        </p>
-
-        <!-- Register Button -->
-        <a href="registration/register.html" class="btn-register">
-            START REGISTRATION
-        </a>
-    </section>
-
-    <!-- ===== FEATURES ===== -->
-    <section class="features">
-        <div class="feature-card">
-            <div class="icon">🎓</div>
-            <h3>QUALITY EDUCATION</h3>
+    <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://images.pexels.com/photos/5212345/pexels-photo-5212345.jpeg" alt="Slide 1">
+                <div class="carousel-overlay">
+                    <div class="container text-start">
+                        <h5 class="text-primary-color text-uppercase mb-3 animate__animated animate__slideInDown">Best Online Courses</h5>
+                        <h1 class="display-3 text-white mb-4 animate__animated animate__zoomIn">Get Educated Online From Your Home</h1>
+                        <a href="login/index.html" class="btn btn-join py-3 px-5">Join Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg" alt="Slide 2">
+                <div class="carousel-overlay">
+                    <div class="container text-start">
+                        <h5 class="text-primary-color text-uppercase mb-3 animate__animated animate__slideInDown">Global Learning</h5>
+                        <h1 class="display-3 text-white mb-4 animate__animated animate__zoomIn">Future-Proof Your Career</h1>
+                        <a href="#" class="btn btn-join py-3 px-5">Get Started</a>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <div class="feature-card">
-            <div class="icon">💻</div>
-            <h3>MODERN LABS</h3>
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <div class="col-lg-4 animate-on-scroll" data-animation="animate__fadeInLeft">
+                <div class="program-card bg-green">
+                    <h2>Undergraduate Programs</h2>
+                    <p>Expanding study areas every year based on community needs.</p>
+                    <ul class="program-list">
+                        <li>Business & Economics</li>
+                        <li>Engineering</li>
+                        <li>Health Sciences</li>
+                        <li>Informatics</li>
+                    </ul>
+                    <a href="#" class="text-white text-decoration-none"><i class="far fa-clock"></i> See More</a>
+                </div>
+            </div>
+            <div class="col-lg-4 animate-on-scroll" data-animation="animate__fadeInUp">
+                <div class="program-card bg-yellow">
+                    <h2>Graduate Programs</h2>
+                    <p>Admas University Hargeisa keeps track of societal needs.</p>
+                    <ul class="program-list">
+                        <li>Business & Administration</li>
+                        <li>Education</li>
+                        <li>Environmental Sciences</li>
+                    </ul>
+                    <a href="#" class="text-dark text-decoration-none"><i class="far fa-clock"></i> See More</a>
+                </div>
+            </div>
+            <div class="col-lg-4 animate-on-scroll" data-animation="animate__fadeInRight">
+                <div class="program-card bg-blue">
+                    <h2>Online & Distance Education</h2>
+                    <p>Instruction delivery for students who cannot attend.</p>
+                    <ul class="program-list">
+                        <li>Social Sciences and Humanities</li>
+                    </ul>
+                    <a href="#" class="text-white text-decoration-none"><i class="far fa-clock"></i> See More</a>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <div class="feature-card">
-            <div class="icon">👨‍🏫</div>
-            <h3>EXPERT FACULTY</h3>
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-3 col-sm-6 animate-on-scroll" data-animation="animate__fadeInUp">
+                    <div class="service-item text-center p-4">
+                        <i class="fa fa-3x fa-graduation-cap text-primary-color mb-4"></i>
+                        <h5>Skilled Instructors</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 animate-on-scroll" data-animation="animate__fadeInUp">
+                    <div class="service-item text-center p-4 active">
+                        <i class="fa fa-3x fa-home text-white mb-4"></i>
+                        <h5 class="text-white">Home Projects</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 animate-on-scroll" data-animation="animate__fadeInUp">
+                    <div class="service-item text-center p-4">
+                        <i class="fa fa-3x fa-book-open text-primary-color mb-4"></i>
+                        <h5>Book Library</h5>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
 
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center animate-on-scroll" data-animation="animate__fadeInUp">
+                <h6 class="section-title px-3">Categories</h6>
+                <h1 class="mb-5">Courses Categories</h1>
+            </div>
+            <div class="row g-3">
+                <div class="col-lg-7 col-md-6">
+                    <div class="row g-3">
+                        <div class="col-lg-12 animate-on-scroll" data-animation="animate__zoomIn">
+                            <a class="cat-item" href="">
+                                <img class="img-fluid w-100" src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg" alt="">
+                                <div class="cat-overlay"><h5>Web Design</h5><small>49 Courses</small></div>
+                            </a>
+                        </div>
+                        <div class="col-lg-6 animate-on-scroll" data-animation="animate__zoomIn">
+                            <a class="cat-item" href="">
+                                <img class="img-fluid w-100" src="https://images.pexels.com/photos/3182763/pexels-photo-3182763.jpeg" alt="">
+                                <div class="cat-overlay"><h5>Graphic Design</h5><small>49 Courses</small></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 animate-on-scroll" data-animation="animate__zoomIn">
+                    <a class="cat-item h-100" href="">
+                        <img class="img-fluid w-100 h-100" src="https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg" alt="" style="object-fit:cover;">
+                        <div class="cat-overlay"><h5>Online Marketing</h5><small>49 Courses</small></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function revealOnScroll() {
+            var reveals = document.querySelectorAll(".animate-on-scroll");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    var animationType = reveals[i].getAttribute("data-animation");
+                    reveals[i].classList.add("reveal", "animate__animated", animationType);
+                    let items = reveals[i].querySelectorAll('.program-card, .service-item, .cat-item');
+                    items.forEach(el => el.classList.add("reveal"));
+                }
+            }
+        }
+        window.addEventListener("scroll", revealOnScroll);
+        revealOnScroll();
+    </script>
 </body>
 </html>

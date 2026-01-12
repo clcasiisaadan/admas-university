@@ -3,315 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admas University | Portal</title>
+    <title>Admas University | Multi-Role Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-blue: #0099ff;
-            --dark-navy: #0a2540;
-            --gray-light: #f4f7fa;
-            --white: #ffffff;
-            --border-color: #e6e9ef;
-            --shadow: 0 15px 35px rgba(0,0,0,0.1);
+            --primary: #0084b4;
+            --secondary: #00acee;
+            --dark: #0a2540;
+            --bg: #f4f7fa;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; margin: 0;
         }
 
-        /* --- LOGIN CARD --- */
         .login-card {
-            background: var(--white);
-            width: 100%;
-            max-width: 420px;
-            padding: 50px 40px;
-            border-radius: 24px;
-            box-shadow: var(--shadow);
-            text-align: center;
-            animation: cardEntrance 0.7s ease-out;
+            background: white; padding: 40px; border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            width: 100%; max-width: 420px; text-align: center;
         }
 
-        @keyframes cardEntrance {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .role-selection {
+            display: flex; background: #f0f2f5; padding: 5px;
+            border-radius: 12px; margin-bottom: 25px;
         }
 
-        .role-nav {
-            display: flex;
-            background: var(--gray-light);
-            padding: 4px;
-            border-radius: 14px;
-            margin-bottom: 30px;
+        .role-item {
+            flex: 1; padding: 10px; cursor: pointer; border-radius: 10px;
+            font-size: 13px; font-weight: 600; color: #666; transition: 0.3s;
         }
 
-        .role-btn {
-            flex: 1;
-            padding: 12px;
-            cursor: pointer;
-            border-radius: 11px;
-            transition: all 0.3s ease;
-            color: #7a828a;
-            font-weight: 600;
-            font-size: 13px;
+        .role-item.active {
+            background: white; color: var(--primary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        .role-btn.active {
-            background: white;
-            color: var(--primary-blue);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        .input-group { text-align: left; margin-bottom: 15px; position: relative; }
+        .input-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+        .input-group input {
+            width: 100%; padding: 12px 12px 12px 40px; border: 2px solid #eee;
+            border-radius: 10px; box-sizing: border-box; outline: none;
+        }
+        .input-group i { position: absolute; left: 15px; top: 35px; color: #aaa; }
+
+        .login-btn {
+            width: 100%; padding: 14px; background: var(--primary);
+            border: none; border-radius: 12px; color: white;
+            font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
 
-        .input-wrapper {
-            position: relative;
-            margin-bottom: 18px;
-            text-align: left;
-        }
-
-        .input-wrapper i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #99a2ad;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 14px 15px 14px 48px;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            background: #fdfdfd;
-            font-size: 14px;
-            box-sizing: border-box;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus, select:focus {
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 4px rgba(0, 153, 255, 0.1);
-        }
-
-        .btn-main {
-            width: 100%;
-            padding: 16px;
-            background: var(--dark-navy);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-main:hover {
-            background: var(--primary-blue);
-            transform: translateY(-2px);
-        }
-
-        /* --- ADMISSION MODAL (NEW DESIGN) --- */
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(10, 37, 64, 0.6);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: white;
-            width: 100%;
-            max-width: 750px;
-            border-radius: 15px;
-            overflow: hidden;
-            animation: zoomIn 0.4s ease;
-        }
-
-        @keyframes zoomIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .modal-header {
-            background: var(--dark-navy);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 20px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .modal-body {
-            padding: 30px;
-        }
-
-        /* Two-Column Grid */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-        }
-
-        .form-group label {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--dark-navy);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        .form-group input, .form-group select {
-            padding: 12px;
-            background: #f8fafd;
-            border: 1px solid #e1e4e8;
-            padding-left: 12px; /* No icons in modal input to match image */
-        }
-
-        /* Label Color for Parent (Matching Image red labels) */
-        .label-red { color: #ff0000 !important; }
-
-        .btn-submit {
-            grid-column: span 2;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 600px) {
-            .form-grid { grid-template-columns: 1fr; }
-            .btn-submit { grid-column: span 1; }
-        }
+        .login-btn:hover { background: var(--secondary); transform: translateY(-2px); }
+        
+        .footer-link { margin-top: 20px; font-size: 14px; color: #666; }
+        .footer-link a { color: var(--primary); text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="login-card">
-    <img src="https://upload.wikimedia.org/wikipedia/en/3/3d/Admas_University_Logo.png" width="70" style="margin-bottom: 20px;">
-    <h2 id="roleHeader">Student Login</h2>
-
-    <div class="role-nav">
-        <div class="role-btn" id="btnAdmin" onclick="setRole('Admin')">Admin</div>
-        <div class="role-btn" id="btnInstructor" onclick="setRole('Instructor')">Teacher</div>
-        <div class="role-btn active" id="btnStudent" onclick="setRole('Student')">Student</div>
+    <div class="header">
+        <h2 id="loginTitle" style="color: var(--dark);">Student Access</h2>
     </div>
 
-    <div class="input-wrapper">
-        <i class="fas fa-user"></i>
-        <input type="text" id="loginUser" placeholder="Username / ID Number">
-    </div>
-    <div class="input-wrapper">
-        <i class="fas fa-lock"></i>
-        <input type="password" id="loginPass" placeholder="Password">
+    <div class="role-selection">
+        <div class="role-item active" id="roleStudent" onclick="selectRole('Student')">Student</div>
+        <div class="role-item" id="roleInstructor" onclick="selectRole('Instructor')">Instructor</div>
+        <div class="role-item" id="roleAdmin" onclick="selectRole('Admin')">Admin</div>
     </div>
 
-    <button class="btn-main" onclick="handleLogin()">SIGN IN</button>
+    <div class="form-container">
+        <div class="input-group">
+            <label>Username / ID</label>
+            <i class="fas fa-user"></i>
+            <input type="text" id="loginUser" placeholder="Enter ID or Username">
+        </div>
+        <div class="input-group">
+            <label>Password</label>
+            <i class="fas fa-lock"></i>
+            <input type="password" id="loginPass" placeholder="••••••••">
+        </div>
+        <button class="login-btn" onclick="handleLogin()">Sign In</button>
+    </div>
 
-    <p style="margin-top:25px; font-size:14px; color:#666;">
-        Arday cusub? <span onclick="toggleModal(true)" style="color:var(--primary-blue); font-weight:700; cursor:pointer;">Codso Admission Online</span>
+    <p class="footer-link" id="regLink">
+        New student? <a href="#" onclick="alert('Fadlan codso Admission!')">Apply Now</a>
     </p>
 </div>
 
-<div id="regModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">Admission Registration</div>
-        <div class="modal-body">
-            <form id="admissionForm" class="form-grid">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="stdName" placeholder="Full Name" required>
-                </div>
-                <div class="form-group">
-                    <label>Student Email</label>
-                    <input type="email" id="stdEmail" placeholder="example@email.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="text" id="stdPhone" placeholder="Phone Number" required>
-                </div>
-                <div class="form-group">
-                    <label>Department</label>
-                    <select id="stdDept">
-                        <option>Computer Science</option>
-                        <option>Business Administration</option>
-                        <option>Accounting</option>
-                        <option>Public Health</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="label-red">Parent Name</label>
-                    <input type="text" id="pName" placeholder="Parent Name" required>
-                </div>
-                <div class="form-group">
-                    <label class="label-red">Parent Phone</label>
-                    <input type="text" id="pPhone" placeholder="Parent Phone" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Profile Image</label>
-                    <input type="file" id="stdPhoto" accept="image/*" required style="padding: 8px;">
-                </div>
-                <div class="form-group">
-                    <label>Transcript (PDF)</label>
-                    <input type="file" id="stdCert" accept=".pdf,image/*" required style="padding: 8px;">
-                </div>
-
-                <div class="btn-submit">
-                    <button type="submit" class="btn-main">SUBMIT APPLICATION</button>
-                    <p onclick="toggleModal(false)" style="text-align:center; color:#999; cursor:pointer; margin-top:15px; font-size:14px;">Cancel</p>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <script>
-    function setRole(role) {
-        document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('btn' + role).classList.add('active');
-        document.getElementById('roleHeader').innerText = role + " Login";
-    }
+    let currentRole = "Student";
 
-    function toggleModal(show) {
-        document.getElementById('regModal').style.display = show ? 'flex' : 'none';
+    function selectRole(role) {
+        currentRole = role;
+        document.querySelectorAll('.role-item').forEach(item => item.classList.remove('active'));
+        document.getElementById('role' + role).classList.add('active');
+        document.getElementById('loginTitle').innerText = role + " Access";
+        
+        // Qari Admission link-ga haddii uusan ahayn Student
+        document.getElementById('regLink').style.visibility = (role === 'Student') ? 'visible' : 'hidden';
     }
 
     function handleLogin() {
         const user = document.getElementById('loginUser').value;
         const pass = document.getElementById('loginPass').value;
-        // Logic-gii hore halkani ha u joogo
-        if(user === "admin" && pass === "1234") {
-            window.location.href = "Admin.html";
-        } else {
-            alert("Username ama Password waa khalad!");
+
+        if (currentRole === "Admin") {
+            if (user === "admin" && pass === "1234") {
+                window.location.href = "../academic/admin-dashboard.html";
+            } else {
+                alert("Admin Credentials incorrect!");
+            }
+        } 
+        else if (currentRole === "Instructor") {
+            const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+            // Macallinku wuxuu gelayaa Username iyo Password uu Adminku u sameeyey
+            const found = teachers.find(t => t.user === user && t.pass === pass);
+            
+            if (found) {
+                localStorage.setItem('currentUser', JSON.stringify(found));
+                alert("Welcome Instructor " + found.name);
+                window.location.href = "../teacher/teacher-dashboard.html";
+            } else {
+                alert("Instructor account not found or wrong password!");
+            }
+        } 
+        else {
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            const found = students.find(s => s.id === user && s.password === pass);
+
+            if (found) {
+                localStorage.setItem('currentUser', JSON.stringify(found));
+                alert("Welcome Student " + found.name);
+                window.location.href = "../student/student-dashboard.html";
+            } else {
+                alert("Invalid Student ID or Password!");
+            }
         }
     }
-
-    // Admission Submit
-    document.getElementById('admissionForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert("Codsigaaga si guul leh ayaa loo diray!");
-        toggleModal(false);
-    });
 </script>
 </body>
 </html>
